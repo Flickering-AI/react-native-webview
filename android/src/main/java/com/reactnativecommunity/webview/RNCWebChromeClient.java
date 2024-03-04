@@ -10,13 +10,15 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
-import android.webkit.GeolocationPermissions;
-import android.webkit.PermissionRequest;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import com.tencent.smtt.export.external.interfaces.ConsoleMessage;
+import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
+import com.tencent.smtt.export.external.interfaces.PermissionRequest;
+
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import android.widget.FrameLayout;
 
 import androidx.annotation.RequiresApi;
@@ -53,7 +55,7 @@ public class RNCWebChromeClient extends WebChromeClient implements LifecycleEven
     protected RNCWebView mWebView;
 
     protected View mVideoView;
-    protected WebChromeClient.CustomViewCallback mCustomViewCallback;
+    protected IX5WebChromeClient.CustomViewCallback mCustomViewCallback;
 
     /*
      * - Permissions -
@@ -67,7 +69,7 @@ public class RNCWebChromeClient extends WebChromeClient implements LifecycleEven
     protected List<String> grantedPermissions;
 
     // Webview geolocation permission callback
-    protected GeolocationPermissions.Callback geolocationPermissionCallback;
+    protected GeolocationPermissionsCallback geolocationPermissionCallback;
     // Webview geolocation permission origin callback
     protected String geolocationPermissionOrigin;
 
@@ -194,7 +196,7 @@ public class RNCWebChromeClient extends WebChromeClient implements LifecycleEven
 
 
     @Override
-    public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+    public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissionsCallback callback) {
 
         if (ContextCompat.checkSelfPermission(this.mWebView.getThemedReactContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -324,7 +326,7 @@ public class RNCWebChromeClient extends WebChromeClient implements LifecycleEven
       this.mWebView.getThemedReactContext().getNativeModule(RNCWebViewModule.class).startPhotoPickerIntent(filePathCallback, "");
     }
 
-    protected void openFileChooser(ValueCallback<Uri> filePathCallback, String acceptType, String capture) {
+    public void openFileChooser(ValueCallback<Uri> filePathCallback, String acceptType, String capture) {
       this.mWebView.getThemedReactContext().getNativeModule(RNCWebViewModule.class).startPhotoPickerIntent(filePathCallback, acceptType);
     }
 

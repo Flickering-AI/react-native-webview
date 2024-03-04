@@ -9,10 +9,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import androidx.annotation.Nullable;
 
@@ -49,7 +49,7 @@ public class RNCWebView extends WebView implements LifecycleEventListener {
     RNCWebViewBridge bridge;
 
     /**
-     * android.webkit.WebChromeClient fundamentally does not support JS injection into frames other
+     * com.tencent.smtt.sdk.WebChromeClient fundamentally does not support JS injection into frames other
      * than the main frame, so these two properties are mostly here just for parity with iOS & macOS.
      */
     protected boolean injectedJavaScriptForMainFrameOnly = true;

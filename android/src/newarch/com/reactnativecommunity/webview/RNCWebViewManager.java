@@ -25,7 +25,7 @@ import com.reactnativecommunity.webview.events.TopOpenWindowEvent;
 import com.reactnativecommunity.webview.events.TopRenderProcessGoneEvent;
 import com.reactnativecommunity.webview.events.TopShouldStartLoadWithRequestEvent;
 
-import android.webkit.WebChromeClient;
+import com.tencent.smtt.sdk.WebChromeClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;

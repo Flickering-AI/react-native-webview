@@ -2,7 +2,7 @@ package com.reactnativecommunity.webview;
 
 import android.app.DownloadManager;
 import android.net.Uri;
-import android.webkit.ValueCallback;
+import com.tencent.smtt.sdk.ValueCallback;
 
 import androidx.annotation.NonNull;
 

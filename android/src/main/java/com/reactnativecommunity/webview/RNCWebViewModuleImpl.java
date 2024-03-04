@@ -20,8 +20,8 @@ import androidx.core.util.Pair;
 
 import android.util.Log;
 import android.webkit.MimeTypeMap;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
 import android.widget.Toast;
 
 import com.facebook.common.activitylistener.ActivityListenerManager;

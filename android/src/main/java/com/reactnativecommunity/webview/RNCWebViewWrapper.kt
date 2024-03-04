@@ -3,7 +3,7 @@ package com.reactnativecommunity.webview
 import android.content.Context
 import android.graphics.Color
 import android.view.View
-import android.webkit.WebView
+import com.tencent.smtt.sdk.WebView
 import android.widget.FrameLayout
 
 /**

@@ -11,10 +11,10 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.webkit.CookieManager
-import android.webkit.DownloadListener
+import com.tencent.smtt.sdk.CookieManager
+import com.tencent.smtt.sdk.DownloadListener
 import android.webkit.WebSettings
-import android.webkit.WebView
+import com.tencent.smtt.sdk.WebView
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.facebook.react.bridge.ReadableArray
@@ -22,6 +22,7 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.common.build.ReactBuildConfig
 import com.facebook.react.uimanager.ThemedReactContext
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
@@ -78,8 +79,8 @@ class RNCWebViewManagerImpl {
         settings.setSupportMultipleWindows(true)
         settings.allowFileAccess = false
         settings.allowContentAccess = false
-        settings.allowFileAccessFromFileURLs = false
-        settings.allowUniversalAccessFromFileURLs = false
+//        settings.allowFileAccessFromFileURLs = false
+//        settings.allowUniversalAccessFromFileURLs = false
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
 
         // Fixes broken full-screen modals/galleries due to body height being 0.
@@ -150,7 +151,7 @@ class RNCWebViewManagerImpl {
                         return Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888)
                     }
 
-                    override fun onShowCustomView(view: View, callback: CustomViewCallback) {
+                    override fun onShowCustomView(view: View, callback: IX5WebChromeClient.CustomViewCallback) {
                         if (mVideoView != null) {
                             callback.onCustomViewHidden()
                             return
@@ -361,7 +362,7 @@ class RNCWebViewManagerImpl {
     }
 
     fun setAllowUniversalAccessFromFileURLs(viewWrapper: RNCWebViewWrapper, allow: Boolean) {
-        viewWrapper.webView.settings.allowUniversalAccessFromFileURLs = allow
+//        viewWrapper.webView.settings.allowUniversalAccessFromFileURLs = allow
     }
 
     private fun getDownloadingMessageOrDefault(): String? {
@@ -545,7 +546,7 @@ class RNCWebViewManagerImpl {
 
     fun setAllowFileAccessFromFileURLs(viewWrapper: RNCWebViewWrapper, value: Boolean) {
         val view = viewWrapper.webView
-        view.settings.allowFileAccessFromFileURLs = value;
+//        view.settings.allowFileAccessFromFileURLs = value;
     }
 
     fun setAllowsFullscreenVideo(viewWrapper: RNCWebViewWrapper, value: Boolean) {
@@ -591,7 +592,7 @@ class RNCWebViewManagerImpl {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
                 val forceDarkMode =
                     if (enabled) WebSettingsCompat.FORCE_DARK_ON else WebSettingsCompat.FORCE_DARK_OFF
-                WebSettingsCompat.setForceDark(view.settings, forceDarkMode)
+//                WebSettingsCompat.setForceDark(view.settings, forceDarkMode)
             }
 
             // Set how WebView content should be darkened.
@@ -600,10 +601,10 @@ class RNCWebViewManagerImpl {
             // More information about Force Dark Strategy can be found here:
             // https://developer.android.com/reference/androidx/webkit/WebSettingsCompat#setForceDarkStrategy(android.webkit.WebSettings)
             if (enabled && WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
-                WebSettingsCompat.setForceDarkStrategy(
-                    view.settings,
-                    WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING
-                )
+//                WebSettingsCompat.setForceDarkStrategy(
+//                    view.settings,
+//                    WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING
+//                )
             }
         }
     }
