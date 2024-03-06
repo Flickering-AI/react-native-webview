@@ -76,6 +76,7 @@
     "url": "https://github.com/react-native-webview/react-native-webview.git"
   },
   "files": [
+    "android/libs",
     "android/src",
     "android/build.gradle",
     "android/gradle.properties",
