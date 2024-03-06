@@ -6,6 +6,8 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 
 import android.util.Log;
+
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.tencent.smtt.sdk.ValueCallback;
 
 import com.facebook.react.bridge.Promise;
@@ -28,11 +30,25 @@ public class RNCWebViewModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getTBSInstalling(final ReadableMap config, final Promise promise) {
+      promise.resolve(QbSdk.getTBSInstalling());
+    }
+    @ReactMethod
+    public void getIsInitX5Environment(final ReadableMap config, final Promise promise) {
+      promise.resolve(QbSdk.getIsInitX5Environment());
+    }
+    @ReactMethod
+    public void getTbsVersion(final ReadableMap config, final Promise promise) {
+      promise.resolve(QbSdk.getTbsVersion(getCurrentActivity()));
+    }
+    @ReactMethod
     public void initTBSX5(final ReadableMap config, final Promise promise) {
       /* 设置允许移动网络下进行内核下载。默认不下载，会导致部分一直用移动网络的用户无法使用x5内核 */
       QbSdk.setDownloadWithoutWifi(config.getBoolean("downloadWithoutWifi"));
-
       QbSdk.setCoreMinVersion(config.getInt("coreMinVersion"));
+      if (config.getBoolean("enableX5WithoutRestart")) {
+        QbSdk.enableX5WithoutRestart();
+      }
       /* SDK内核初始化周期回调，包括 下载、安装、加载 */
 
       QbSdk.setTbsListener(new TbsListener() {
@@ -51,6 +67,10 @@ public class RNCWebViewModule extends ReactContextBaseJavaModule {
         @Override
         public void onInstallFinish(int stateCode) {
           Log.i(TAG, "onInstallFinished: " + stateCode);
+
+          getReactApplicationContext()
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit("onInstallFinish", stateCode);
         }
 
         /**
@@ -62,7 +82,11 @@ public class RNCWebViewModule extends ReactContextBaseJavaModule {
           Log.i(TAG, "Core Downloading: " + progress);
         }
       });
-
+      ReadableMap installLocalTbsCoreConfig = config.getMap("installLocalTbsCore");
+      if (installLocalTbsCoreConfig != null) {
+        QbSdk.installLocalTbsCore(getCurrentActivity(), installLocalTbsCoreConfig.getInt("version"), installLocalTbsCoreConfig.getString("path"));
+        return;
+      }
       /* 此过程包括X5内核的下载、预初始化，接入方不需要接管处理x5的初始化流程，希望无感接入 */
       QbSdk.initX5Environment(getCurrentActivity(), new QbSdk.PreInitCallback() {
         @Override
