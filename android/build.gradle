@@ -86,6 +86,17 @@ android {
             }
         }
     }
+
+    flavorDimensions += "version"
+    productFlavors {
+        create("normal") {
+            isDefault true
+            dimension = "version"
+        }
+        create("google") {
+            dimension = "version"
+        }
+    }
 }
 
 def reactNativePath = findNodeModulePath(projectDir, "react-native")
