@@ -81,6 +81,8 @@ class RNCWebViewManagerImpl {
         settings.allowContentAccess = false
 //        settings.allowFileAccessFromFileURLs = false
 //        settings.allowUniversalAccessFromFileURLs = false
+        settings.setAllowFileAccessFromFileURLs(false);
+        settings.setAllowUniversalAccessFromFileURLs(false);
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
 
         // Fixes broken full-screen modals/galleries due to body height being 0.
@@ -363,6 +365,7 @@ class RNCWebViewManagerImpl {
 
     fun setAllowUniversalAccessFromFileURLs(viewWrapper: RNCWebViewWrapper, allow: Boolean) {
 //        viewWrapper.webView.settings.allowUniversalAccessFromFileURLs = allow
+        viewWrapper.webView.settings.setAllowUniversalAccessFromFileURLs(allow);
     }
 
     private fun getDownloadingMessageOrDefault(): String? {
@@ -547,6 +550,7 @@ class RNCWebViewManagerImpl {
     fun setAllowFileAccessFromFileURLs(viewWrapper: RNCWebViewWrapper, value: Boolean) {
         val view = viewWrapper.webView
 //        view.settings.allowFileAccessFromFileURLs = value;
+        view.settings.setAllowFileAccessFromFileURLs(value);
     }
 
     fun setAllowsFullscreenVideo(viewWrapper: RNCWebViewWrapper, value: Boolean) {
